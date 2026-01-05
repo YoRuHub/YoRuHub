@@ -15,25 +15,9 @@
 
 <div align="center">
 
-<table>
-<tr>
-<td width="200" align="center">
-<img src="https://skillicons.dev/icons?i=flutter" width="100" height="100" alt="Flutter" />
-<br><strong>Flutter</strong>
-</td>
-<td width="400" align="left">
-
-### **Hi, I'm YoRu.!**
-🚀 **Flutter Developer** & **Extension Creator**
-
-🌍 **Location:** Japan 🇯🇵
-💼 **Focus:** Mobile Apps & Dev Tools
-☕ **Powered by:** Coffee and Code
-🎯 **Goal:** Creating amazing user experiences  
-
-</td>
-</tr>
-</table>
+<div align="center">
+  <img src="assets/profile_card.svg" width="100%" alt="YoRu's Profile Card" />
+</div>
 
 </div>
 
