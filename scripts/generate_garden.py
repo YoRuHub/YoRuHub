@@ -135,7 +135,7 @@ def get_flower_svg(cx, cy, flower_type, main_color, center_color):
         </g>"""
 
 def build_svg(calendar_data):
-    """セルの中央精度を高め、マルチ形状ランダム花を散りばめた庭SVGをビルドする"""
+    """セルの中央精度を高め、サンプルアイコンを削除したスッキリ庭SVGをビルドする"""
     weeks = calendar_data["weeks"]
     if len(weeks) > 53:
         weeks = weeks[-53:]
@@ -145,7 +145,7 @@ def build_svg(calendar_data):
     padding_left = 42
     padding_right = 20
     header_height = 32
-    footer_height = 38
+    footer_height = 28 # 余白をスッキリ詰める
     
     cols = len(weeks)
     rows = 7
@@ -205,14 +205,12 @@ def build_svg(calendar_data):
             x = padding_left + col * (cell_size + gap)
             y = header_height + row * (cell_size + gap)
             
-            # **【厳密な中央計算】**
-            cx = x + (cell_size / 2.0)  # x + 8.0 (セルの左右ぴったり真ん中)
-            by = y + cell_size - 2.0    # y + 14.0 (セルの下端から2px上)
+            cx = x + (cell_size / 2.0)
+            by = y + cell_size - 2.0
             
             delay = round((col * 0.07 + row * 0.11) % 3.0, 2)
             duration = round(2.7 + (col % 4) * 0.3, 2)
             
-            # マスの背景色
             if count == 0:
                 bg_color = "#211814"
             elif count <= 2:
@@ -228,15 +226,14 @@ def build_svg(calendar_data):
             if count == 0:
                 pass
             elif count <= 2:
-                # 芽 (Sprout) - 完全中央配置のリアル 🌱
+                # 芽 (Sprout)
                 plant_element = f"""<g class="sway" style="animation-delay:{delay}s;animation-duration:{duration}s;transform-origin:{cx:.2f}px {by:.2f}px;"><path d="M{cx:.2f},{by:.2f} Q{cx:.2f},{y+9.5:.1f} {cx:.2f},{y+6.5:.1f}" stroke="#6eb014" stroke-width="1.8" fill="none" stroke-linecap="round" /><path d="M{cx:.2f},{y+7.0:.1f} C{cx-4.2:.2f},{y+5.8:.1f} {cx-4.2:.2f},{y+2.8:.1f} {cx-0.2:.2f},{y+3.8:.1f} Z" fill="#9ce82b" /><path d="M{cx:.2f},{y+7.0:.1f} C{cx+4.2:.2f},{y+5.8:.1f} {cx+4.2:.2f},{y+2.8:.1f} {cx+0.2:.2f},{y+3.8:.1f} Z" fill="#75c419" /></g>"""
             elif count <= 5:
-                # 蕾 (Bud) - 完全中央配置
+                # 蕾 (Bud)
                 bud_color = "#ff69b4" if (col + row) % 2 == 0 else "#ffcc00"
                 plant_element = f"""<g class="sway" style="animation-delay:{delay}s;animation-duration:{duration}s;transform-origin:{cx:.2f}px {by:.2f}px;"><path d="M{cx:.2f},{by:.2f} Q{cx-.5:.2f},{y+10.0:.1f} {cx:.2f},{y+5.5:.1f}" stroke="#3bb852" stroke-width="1.8" fill="none" stroke-linecap="round" /><path d="M{cx:.2f},{y+10.5:.1f} C{cx-3.8:.2f},{y+9.5:.1f} {cx-3.8:.2f},{y+7.5:.1f} {cx-.3:.2f},{y+8.5:.1f} Z" fill="#2ca043" /><circle cx="{cx:.2f}" cy="{y+4.5:.1f}" r="2.8" fill="{bud_color}" /><circle cx="{cx:.2f}" cy="{y+4.5:.1f}" r="1.2" fill="#ffffff" opacity="0.8" /></g>"""
             else:
-                # 満開の花 (Flower) - 完全中央配置 ＋ ランダム形状・ランダムカラー
-                # 位置ハッシュから花タイプ(0〜4)とカラーを選択
+                # 満開の花 (Flower)
                 hash_val = (col * 13 + row * 7 + count * 3)
                 flower_type = hash_val % 5
                 main_color = flower_colors[hash_val % len(flower_colors)]
@@ -248,40 +245,12 @@ def build_svg(calendar_data):
                 
             svg_body.append(f"{cell_rect}{plant_element}")
 
-    # 凡例 (Legend)
-    legend_y = height - footer_height + 24
-    legend_x_start = width - padding_right - 145
+    # 下部タイトル（右下のサンプルアイコンは完全削除）
+    legend_y = height - 10.0
     
     svg_footer = f"""
-  <!-- Legend -->
+  <!-- Footer Title Only -->
   <text x="{padding_left}" y="{legend_y:.1f}" class="legend-text">🌱 Contribution Garden (Past 53 weeks)</text>
-  <g transform="translate({legend_x_start:.1f}, {legend_y - 12:.1f})">
-    <!-- 0: 土 -->
-    <rect x="0" y="0" width="13" height="13" rx="2.5" fill="#211814" />
-    
-    <!-- 1-2: 芽 -->
-    <g transform="translate(32, 0)">
-      <rect x="0" y="0" width="13" height="13" rx="2.5" fill="#2a2417" />
-      <path d="M6.5,11 Q6.5,8 6.5,5.5" stroke="#6eb014" stroke-width="1.3" fill="none" />
-      <path d="M6.5,6.0 C3.5,5.0 3.0,2.5 6.5,3.2 Z" fill="#9ce82b" />
-      <path d="M6.5,6.0 C9.5,5.0 10.0,2.5 6.5,3.2 Z" fill="#75c419" />
-    </g>
-    
-    <!-- 3-5: 蕾 -->
-    <g transform="translate(64, 0)">
-      <rect x="0" y="0" width="13" height="13" rx="2.5" fill="#183818" />
-      <line x1="6.5" y1="11" x2="6.5" y2="4.5" stroke="#3bb852" stroke-width="1.3" />
-      <circle cx="6.5" cy="4" r="2" fill="#ffcc00" />
-    </g>
-    
-    <!-- 6+: 満開の花 -->
-    <g transform="translate(96, 0)">
-      <rect x="0" y="0" width="13" height="13" rx="2.5" fill="#0f4216" />
-      <line x1="6.5" y1="11" x2="6.5" y2="5" stroke="#22c55e" stroke-width="1.5" />
-      <circle cx="6.5" cy="4" r="2.5" fill="#ff2a85" />
-      <circle cx="6.5" cy="4" r="1" fill="#fff066" />
-    </g>
-  </g>
 </svg>
 """
 
