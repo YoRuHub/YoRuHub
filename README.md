@@ -2,27 +2,23 @@
   <img src="https://raw.githubusercontent.com/YoRuHub/YoRuHub/output/garden-contribution-graph.svg" alt="YoRu's Contribution Garden" />
 </div>
 
-# Tech Stack
+<br>
 
-<table align="center">
-<tr>
-<td width="50%" align="center" valign="top">
+<div align="center">
 
-### **Languages**
-<img src="https://skillicons.dev/icons?i=swift,php,python,dart" />
+# 🛠️ Tech Stack
 
-### **Frameworks**
-<img src="https://skillicons.dev/icons?i=flutter" />
+### Languages & Frameworks
+<img src="https://skillicons.dev/icons?i=swift,php,python,dart,flutter" />
 
-</td>
-<td width="50%" align="center" valign="top">
+<br><br>
 
-### **Database & Cloud**
-<img src="https://skillicons.dev/icons?i=sqlite,mysql,firebase" />
+### Database & Cloud
+<img src="https://skillicons.dev/icons?i=firebase,mysql,sqlite" />
 
-### **Tools & Design**
+<br><br>
+
+### Tools & Design
 <img src="https://skillicons.dev/icons?i=vscode,git,github,figma" />
 
-</td>
-</tr>
-</table>
+</div>
